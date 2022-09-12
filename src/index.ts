@@ -13,16 +13,14 @@ const main = async () => {
   console.log("browser open!");
   const browser = await puppeteer.launch({ headless: false, devtools: true });
   const page = await browser.newPage();
-  page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1 });
+  // page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1 });
 
-  for (let link of linkList) {
-    const resMatch = link.match(/([^\/]+)([^.com])/g);
-    if (!resMatch) return;
-    await page.goto(link);
-    await page.screenshot({ path: publicImagePath + `/${resMatch[1]}.png` });
-  }
+  await page.goto("https://youtube.com");
+  const input = await page.waitForSelector(`input#search`);
+  await input?.type("gkkd jakarta");
+  await page.keyboard.press("Enter");
 
-  browser.close();
+  // browser.close();
 };
 
 const checkFolder = () => {
