@@ -15,11 +15,22 @@ const main = async () => {
   const page = await browser.newPage();
   // page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1 });
 
-  await page.goto("https://youtube.com");
-  const input = await page.waitForSelector(`input#search`);
-  await input?.type("gkkd jakarta");
-  await page.keyboard.press("Enter");
+  await page.goto("https://github.com");
+  const data = await page.evaluate(
+    () =>
+      document.querySelector(
+        "body > div.application-main > main > div.overflow-hidden > div.home-hero-container.position-relative.js-webgl-globe-data > div.home-hero.position-absolute.z-1.top-0.right-0.bottom-0.left-0.overflow-hidden > div > div > div.col-12.col-lg-7.text-center.text-md-left > h1"
+      )?.textContent
+  );
+  if (!data) return;
+  const stringData = data
+    .replace(",", "")
+    .split("\n")
+    .map(str => str.trim())
+    .filter(str => str !== "")
+    .join(" ");
 
+  console.log(stringData);
   // browser.close();
 };
 
